@@ -49,15 +49,33 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           </Fragment>
         )}
 
-        {isAuth() && (
+        {isAuth() && isAuth().role === "admin" && (
           <li>
-            <span
-              className={
-                "hover:text-blue-100 cursor-pointer p-2 hover:underline"
+            <NavLink
+              to="/admin"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-blue-200 hover:text-blue-100 p-2 hover:underline"
+                  : "hover:text-blue-100 p-2 hover:underline"
               }
             >
               {isAuth().username}
-            </span>
+            </NavLink>
+          </li>
+        )}
+
+        {isAuth() && isAuth().role === "subscriber" && (
+          <li>
+            <NavLink
+              to="/private"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-blue-200 hover:text-blue-100 p-2 hover:underline"
+                  : "hover:text-blue-100 p-2 hover:underline"
+              }
+            >
+              {isAuth().username}
+            </NavLink>
           </li>
         )}
 
@@ -83,7 +101,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <Fragment>
-      <p>{nav()}</p>
+      {nav()}
       <div>{children}</div>
     </Fragment>
   );

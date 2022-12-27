@@ -4,8 +4,10 @@ export interface MyResponse {
   data: {
     token: string;
     user: {
+      _id: string;
       username: string;
       email: string;
+      role: string;
     };
   };
 }

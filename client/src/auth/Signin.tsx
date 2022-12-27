@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Layout from "../core/Layout";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -7,6 +7,8 @@ import { authenticate, isAuth } from "./helpers";
 import "react-toastify/dist/ReactToastify.min.css";
 
 const Signin = () => {
+  let navigate = useNavigate();
+
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -39,8 +41,9 @@ const Signin = () => {
             password: "",
             buttonText: "Signed In",
           });
-
-          toast.success(`Hey ${response.data.user.username}, Welcome back!`);
+          isAuth() && isAuth().role === "admin"
+            ? navigate("/admin", { replace: true })
+            : navigate("/private", { replace: true });
         });
       })
       .catch((error) => {
@@ -136,7 +139,6 @@ const Signin = () => {
   return (
     <Layout>
       <ToastContainer />
-      {isAuth() ? <Navigate to="/" replace /> : null}
       <div className="w-screen flex flex-col items-center justify-center p-20">
         <h1 className="font-medium leading-tight text-5xl mt-0 mb-2 text-blue-400">
           Sign In
