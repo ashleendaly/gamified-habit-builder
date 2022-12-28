@@ -7,6 +7,8 @@ import Private from "./core/Private";
 import PrivateRoute from "./auth/PrivateRoute";
 import Admin from "./core/Admin";
 import AdminRoute from "./auth/AdminRoute";
+import Forgot from "./auth/Forgot";
+import Reset from "./auth/Reset";
 
 const App = () => {
   return (
@@ -15,6 +17,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
+        <Route path="/auth/password/forgot" element={<Forgot />} />
+        <Route path="/auth/password/reset/:token" element={<Reset />} />
         <Route path="/auth/activate/:token" element={<Activate />} />
         <Route
           path="/private"

@@ -3,7 +3,7 @@ import Layout from "./Layout";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import { isAuth, getCookie, signout } from "../auth/helpers";
+import { isAuth, getCookie, signout, updateUser } from "../auth/helpers";
 import { useNavigate } from "react-router-dom";
 
 const Private = () => {
@@ -67,11 +67,13 @@ const Private = () => {
     })
       .then((response) => {
         console.log("PRIVATE PROFILE UPDATE SUCCESS", response);
-        setValues({
-          ...values,
-          buttonText: "Submitted",
+        updateUser(response, () => {
+          setValues({
+            ...values,
+            buttonText: "Submitted",
+          });
+          toast.success("Profile updated successfully");
         });
-        toast.success("Profile updated successfully");
       })
       .catch((error) => {
         console.log("PRIVATE PROFILE ERROR", error.response.data.error);
@@ -84,7 +86,7 @@ const Private = () => {
   };
 
   const updateForm = () => (
-    <div className="p-6 rounded-lg shadow-lg bg-white w-1/3">
+    <div className="p-6 rounded-lg shadow-lg bg-white w-1/3 max-w-2/3">
       <form>
         <div className="form-group mb-6">
           <label className="form-label inline-block mb-2 text-gray-700">
